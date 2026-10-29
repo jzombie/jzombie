@@ -1,0 +1,4 @@
+{
+  "merge_policy": "fail_on_duplicate",
+  "scopes": ["profile"]
+}
