@@ -1,0 +1,37 @@
+# Shared profile values. Profile globals load first; each repo's own
+# values merge over them (see merge_policy).
+
+merge_policy = "fail_on_duplicate"
+
+# --- Identity ---
+handle = "jzombie"
+display_name = ""
+profile_url = "https://github.com/jzombie"
+avatar_url = ""
+contact = ""
+
+# --- Links ---
+github_base = "https://github.com/jzombie"
+raw_base = "https://raw.githubusercontent.com/jzombie"
+website = "https://zenosmosis.com"
+
+# --- Voice ---
+tagline = ""
+system_blurb = ""
+tone_notes = ""
+
+# --- Licensing ---
+# List of license fragment pointers; each repo may override.
+licenses = []
+
+# --- Discovery ---
+llms_budget = 5000
+llms_repo_cap = 10
+
+# --- Taxonomy ---
+badge_style = "flat-square"
+repo_roles = ["fetch", "store", "describe", "train", "orchestrate", "operate"]
+reuse_surfaces = []
+
+# --- Repos (#0a: name, blurb, role-in-system, repo-url, reuse-surface) ---
+repos = []
