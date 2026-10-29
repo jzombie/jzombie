@@ -1,4 +1,34 @@
 {
-  "_global": {},
+  "_global": {
+    "avatar_url": "",
+    "badge_style": "flat-square",
+    "contact": "",
+    "copyright_holder": "",
+    "display_name": "",
+    "github_base": "https://github.com/jzombie",
+    "handle": "jzombie",
+    "license_spdx": "MIT",
+    "license_text_ref": "",
+    "llms_budget": 5000,
+    "llms_repo_cap": 10,
+    "merge_policy": "fail_on_duplicate",
+    "profile_url": "https://github.com/jzombie",
+    "raw_base": "https://raw.githubusercontent.com/jzombie",
+    "repo_roles": [
+      "fetch",
+      "store",
+      "describe",
+      "train",
+      "orchestrate",
+      "operate"
+    ],
+    "reuse_surfaces": [],
+    "schema_version": 1,
+    "system_blurb": "",
+    "tagline": "",
+    "templater_version": "",
+    "tone_notes": "",
+    "website": ""
+  },
   "repos": []
 }
