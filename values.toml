@@ -30,8 +30,7 @@ llms_repo_cap = 10
 
 # --- Taxonomy ---
 badge_style = "flat-square"
-repo_roles = ["fetch", "store", "describe", "train", "orchestrate", "operate"]
 reuse_surfaces = []
 
-# --- Repos (#0a: name, blurb, role-in-system, repo-url, reuse-surface) ---
+# --- Repos (#0a: name, blurb, repo-url, reuse-surface) ---
 repos = []
