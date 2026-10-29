@@ -7,7 +7,7 @@
     "display_name": "",
     "github_base": "https://github.com/jzombie",
     "handle": "jzombie",
-    "license_text_ref": "",
+    "licenses": [],
     "llms_budget": 5000,
     "llms_repo_cap": 10,
     "merge_policy": "fail_on_duplicate",
