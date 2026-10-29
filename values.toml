@@ -22,7 +22,7 @@ tone_notes = ""
 
 # --- Licensing ---
 # License fragments every repo inherits; a repo may replace the list.
-licenses = ["license-MIT"]
+licenses = ["LICENSE-MIT"]
 
 # --- Discovery ---
 llms_budget = 5000
