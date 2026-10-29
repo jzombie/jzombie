@@ -7,7 +7,7 @@ merge_policy = "fail_on_duplicate"
 handle = "jzombie"
 display_name = ""
 profile_url = "https://github.com/jzombie"
-avatar_url = "https://github.com/jzombie.png"
+avatar_url = "https://github.com/zenOSmosis.png"
 contact = "jeremy.harris@zenosmosis.com"
 
 # --- Links ---
