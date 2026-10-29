@@ -21,8 +21,8 @@ system_blurb = ""
 tone_notes = ""
 
 # --- Licensing ---
-# List of license fragment pointers; each repo may override.
-licenses = []
+# License fragments every repo inherits; a repo may replace the list.
+licenses = ["license-MIT"]
 
 # --- Discovery ---
 llms_budget = 5000
