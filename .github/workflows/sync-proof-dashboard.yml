@@ -26,8 +26,7 @@ jobs:
           path: .source
           sparse-checkout: |
             proof/README.md
-            proof/charts
-            proof/indicators
+            proof/dashboard
       - uses: jzombie/rust-oxdock@main
         with:
           product: oxdock
@@ -39,6 +38,13 @@ jobs:
           WORKSPACE SYSTEM
           WORKDIR {{ env:GITHUB_WORKSPACE }}
           COPY .source/proof/README.md README.md
+          LET $dashboard_kind: STRING = PATH_TYPE("dashboard")
+          IF $dashboard_kind != "absent" {
+            REMOVE --recursive dashboard
+          }
+          COPY .source/proof/dashboard dashboard
+          # Legacy loose dirs, pre-dashboard bundle: gone after the
+          # first sync lands, guarded so later runs skip silently.
           LET $charts_kind: STRING = PATH_TYPE("charts")
           IF $charts_kind != "absent" {
             REMOVE --recursive charts
@@ -47,11 +53,9 @@ jobs:
           IF $indicators_kind != "absent" {
             REMOVE --recursive indicators
           }
-          COPY .source/proof/charts charts
-          COPY .source/proof/indicators indicators
           REMOVE --recursive .source
           RUN ["git", "config", "user.name", "github-actions[bot]"]
           RUN ["git", "config", "user.email", "github-actions[bot]@users.noreply.github.com"]
-          RUN ["git", "add", "README.md", "charts", "indicators"]
+          RUN ["git", "add", "-A"]
           RUN ["sh", "-c", "git diff --cached --quiet || git commit -m 'sync proof dashboard from jzombie-graph'"]
           RUN ["git", "push"]
