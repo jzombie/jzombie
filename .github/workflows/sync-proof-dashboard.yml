@@ -1,8 +1,8 @@
 name: sync-proof-dashboard
 on:
   schedule:
-    # After jzombie-graph nightly (04:17 UTC) — offset off the top of the hour.
-    - cron: "47 5 * * *"
+    # Exactly one hour after the jzombie-graph nightly (04:17 UTC).
+    - cron: "17 5 * * *"
   workflow_dispatch: {}
 permissions:
   contents: write
