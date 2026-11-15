@@ -56,6 +56,9 @@ jobs:
           REMOVE --recursive .source
           RUN ["git", "config", "user.name", "github-actions[bot]"]
           RUN ["git", "config", "user.email", "github-actions[bot]@users.noreply.github.com"]
+          # -A stages everything (added, modified, deleted) with no
+          # pathspec: picks up the legacy dir removals above and never
+          # fatals on a path that no longer exists.
           RUN ["git", "add", "-A"]
           RUN ["sh", "-c", "git diff --cached --quiet || git commit -m 'sync proof dashboard from jzombie-graph'"]
           RUN ["git", "push"]
