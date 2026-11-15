@@ -30,11 +30,12 @@ jobs:
         run: |
           oxdock <<'EOF'
           WORKSPACE LOCAL
-          RUN ["cp", ".source/proof/README.md", "README.md"]
-          RUN ["rm", "-rf", "charts", "indicators"]
-          RUN ["cp", "-R", ".source/proof/charts", "charts"]
-          RUN ["cp", "-R", ".source/proof/indicators", "indicators"]
-          RUN ["rm", "-rf", ".source"]
+          COPY .source/proof/README.md README.md
+          REMOVE --recursive charts
+          REMOVE --recursive indicators
+          COPY .source/proof/charts charts
+          COPY .source/proof/indicators indicators
+          REMOVE --recursive .source
           RUN ["git", "config", "user.name", "github-actions[bot]"]
           RUN ["git", "config", "user.email", "github-actions[bot]@users.noreply.github.com"]
           RUN ["git", "add", "README.md", "charts", "indicators"]
