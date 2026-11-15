@@ -1,0 +1,57 @@
+name: sync-proof-dashboard
+on:
+  schedule:
+    # Exactly one hour after the jzombie-graph nightly (04:17 UTC).
+    - cron: "17 5 * * *"
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency:
+  group: sync-proof-dashboard
+  cancel-in-progress: false
+# Temp-file DSL steps resolve the workspace through this, never
+# through the script path: GitHub stages `run:` blocks outside the
+# checkout, so discovery would misresolve without the override.
+env:
+  OXDOCK_WORKSPACE_ROOT: ${{ github.workspace }}
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: jzombie/jzombie-graph
+          ref: main
+          path: .source
+          sparse-checkout: |
+            proof/README.md
+            proof/charts
+            proof/indicators
+      - uses: jzombie/rust-oxdock@main
+        with:
+          product: oxdock
+      - name: sync vendored dashboard
+        shell: oxdock --script {0}
+        run: |
+          IMPORT [STD]
+          INHERIT_ENV [GITHUB_WORKSPACE]
+          WORKSPACE SYSTEM
+          WORKDIR {{ env:GITHUB_WORKSPACE }}
+          COPY .source/proof/README.md README.md
+          LET $charts_kind: STRING = PATH_TYPE("charts")
+          IF $charts_kind != "absent" {
+            REMOVE --recursive charts
+          }
+          LET $indicators_kind: STRING = PATH_TYPE("indicators")
+          IF $indicators_kind != "absent" {
+            REMOVE --recursive indicators
+          }
+          COPY .source/proof/charts charts
+          COPY .source/proof/indicators indicators
+          REMOVE --recursive .source
+          RUN ["git", "config", "user.name", "github-actions[bot]"]
+          RUN ["git", "config", "user.email", "github-actions[bot]@users.noreply.github.com"]
+          RUN ["git", "add", "README.md", "charts", "indicators"]
+          RUN ["sh", "-c", "git diff --cached --quiet || git commit -m 'sync proof dashboard from jzombie-graph'"]
+          RUN ["git", "push"]
