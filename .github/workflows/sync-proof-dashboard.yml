@@ -46,16 +46,6 @@ jobs:
             REMOVE --recursive dashboard
           }
           COPY .source/proof/dashboard dashboard
-          # Legacy loose dirs, pre-dashboard bundle: gone after the
-          # first sync lands, guarded so later runs skip silently.
-          LET $charts_kind: STRING = PATH_TYPE("charts")
-          IF $charts_kind != "absent" {
-            REMOVE --recursive charts
-          }
-          LET $indicators_kind: STRING = PATH_TYPE("indicators")
-          IF $indicators_kind != "absent" {
-            REMOVE --recursive indicators
-          }
           REMOVE --recursive .source
           RUN ["git", "config", "user.name", "github-actions[bot]"]
           RUN ["git", "config", "user.email", "github-actions[bot]@users.noreply.github.com"]
