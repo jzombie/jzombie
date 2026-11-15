@@ -9,6 +9,11 @@ permissions:
 concurrency:
   group: sync-proof-dashboard
   cancel-in-progress: false
+# Temp-file DSL steps resolve the workspace through this, never
+# through the script path: GitHub stages `run:` blocks outside the
+# checkout, so discovery would misresolve without the override.
+env:
+  OXDOCK_WORKSPACE_ROOT: ${{ github.workspace }}
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -27,9 +32,12 @@ jobs:
         with:
           product: oxdock
       - name: sync vendored dashboard
+        shell: oxdock --script {0}
         run: |
-          oxdock <<'EOF'
-          WORKSPACE LOCAL
+          IMPORT [STD]
+          INHERIT_ENV [GITHUB_WORKSPACE]
+          WORKSPACE SYSTEM
+          WORKDIR {{ env:GITHUB_WORKSPACE }}
           COPY .source/proof/README.md README.md
           REMOVE --recursive charts
           REMOVE --recursive indicators
@@ -41,4 +49,3 @@ jobs:
           RUN ["git", "add", "README.md", "charts", "indicators"]
           RUN ["sh", "-c", "git diff --cached --quiet || git commit -m 'sync proof dashboard from jzombie-graph'"]
           RUN ["git", "push"]
-          EOF
