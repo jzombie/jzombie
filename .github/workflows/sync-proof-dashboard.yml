@@ -1,0 +1,39 @@
+name: sync-proof-dashboard
+on:
+  schedule:
+    # After jzombie-graph nightly (04:17 UTC) — offset off the top of the hour.
+    - cron: "47 5 * * *"
+  workflow_dispatch: {}
+permissions:
+  contents: write
+concurrency:
+  group: sync-proof-dashboard
+  cancel-in-progress: false
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: jzombie/jzombie-graph
+          ref: main
+          path: .source
+          sparse-checkout: |
+            proof/README.md
+            proof/charts
+            proof/indicators
+      - name: sync vendored dashboard
+        shell: bash
+        run: |
+          set -euo pipefail
+          cp .source/proof/README.md README.md
+          rm -rf charts indicators
+          cp -R .source/proof/charts charts
+          cp -R .source/proof/indicators indicators
+          rm -rf .source
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md charts indicators
+          git diff --cached --quiet || git commit -m "sync proof dashboard from jzombie-graph"
+          git push
