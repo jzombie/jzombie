@@ -39,8 +39,14 @@ jobs:
           WORKSPACE SYSTEM
           WORKDIR {{ env:GITHUB_WORKSPACE }}
           COPY .source/proof/README.md README.md
-          REMOVE --recursive charts
-          REMOVE --recursive indicators
+          LET $charts_kind: STRING = PATH_TYPE("charts")
+          IF $charts_kind != "absent" {
+            REMOVE --recursive charts
+          }
+          LET $indicators_kind: STRING = PATH_TYPE("indicators")
+          IF $indicators_kind != "absent" {
+            REMOVE --recursive indicators
+          }
           COPY .source/proof/charts charts
           COPY .source/proof/indicators indicators
           REMOVE --recursive .source
