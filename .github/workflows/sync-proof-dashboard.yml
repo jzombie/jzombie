@@ -24,9 +24,12 @@ jobs:
           repository: jzombie/jzombie-graph
           ref: main
           path: .source
+          # Fragments stay behind: they are build inputs oxdock-render
+          # consumed, not assets the profile embeds.
           sparse-checkout: |
             proof/README.md
-            proof/dashboard
+            proof/dashboard/charts
+            proof/dashboard/indicators
       - uses: jzombie/rust-oxdock@main
         with:
           product: oxdock
