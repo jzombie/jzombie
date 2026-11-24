@@ -16,6 +16,12 @@ raw_base = "https://raw.githubusercontent.com/jzombie"
 website = "https://zenosmosis.com"
 
 # --- Voice ---
+# TODO: To update the "voice" with the semantic constituents that form a one-liner
+# 1.  The Character
+# 2.  The Problem
+# 3.  The Plan
+# 4.  The Success
+# Also consider adding fields for the "guide" and the calls to action (the only actions that you can take are actually linking to something)
 tagline = ""
 system_blurb = ""
 tone_notes = ""
